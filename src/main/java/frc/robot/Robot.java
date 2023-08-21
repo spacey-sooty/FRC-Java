@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -29,16 +30,9 @@ private static DoubleSolenoid solenoid = new DoubleSolenoid(6, edu.wpi.first.wpi
 
 private static XboxController driver = new XboxController(0);
 
-private static final String kDefaultAuto = "Default";
-private static final String kCustomAuto = "My Auto";
-private String m_autoSelected;
-private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
 @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    compressor.isEnabled();
   }
 
   @Override
@@ -46,19 +40,17 @@ private final SendableChooser<String> m_chooser = new SendableChooser<>();
   
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    System.out.println("Auto selected: " + m_autoSelected);
+    intakeMotor.set(ControlMode.PercentOutput, 0.7);
   }
 
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        break;
-      case kDefaultAuto:
-      default:
-        break;
-    }
+    DrivebaseLeft1.set(ControlMode.PercentOutput, 0.4);
+    DrivebaseLeft2.set(ControlMode.PercentOutput, 0.4);
+    DrivebaseLeft3.set(ControlMode.PercentOutput, 0.4);
+    DrivebaseRight1.set(ControlMode.PercentOutput, 0.4);
+    DrivebaseRight2.set(ControlMode.PercentOutput, 0.4);
+    DrivebaseRight3.set(ControlMode.PercentOutput, 0.4);
   }
 
   @Override
