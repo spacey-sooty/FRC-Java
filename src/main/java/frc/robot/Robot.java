@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.lang.Math;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -56,7 +58,26 @@ private static XboxController driver = new XboxController(0);
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    double right = (Math.abs(driver.getRightY()) > 0.15) ? driver.getRightY() : 0;
+    double left = (Math.abs(driver.getLeftY()) > 0.15) ? driver.getLeftY() : 0;
+    double aPressed = (driver.getAButton()) ? 0.3 : 0;
+    double trigger = (Math.abs(driver.getRightTriggerAxis()) > 0.15) ? driver.getRightTriggerAxis() : 0;
+
+    DrivebaseLeft1.set(ControlMode.PercentOutput, left);
+    DrivebaseLeft2.set(ControlMode.PercentOutput, left);
+    DrivebaseLeft3.set(ControlMode.PercentOutput, left);
+    DrivebaseRight1.set(ControlMode.PercentOutput, right);
+    DrivebaseRight2.set(ControlMode.PercentOutput, right);
+    DrivebaseRight3.set(ControlMode.PercentOutput, right);
+
+    if (driver.getXButtonReleased()) { solenoid.toggle(); }
+
+    shooterMotor1.set(ControlMode.PercentOutput, -trigger);
+    shooterMotor2.set(ControlMode.PercentOutput, trigger);
+
+    intakeMotor.set(ControlMode.PercentOutput, aPressed);
+  }
 
   @Override
   public void disabledInit() {}
