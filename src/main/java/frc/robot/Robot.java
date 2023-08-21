@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 private static WPI_TalonSRX shooterMotor1 = new WPI_TalonSRX(4);
@@ -40,7 +38,8 @@ private static XboxController driver = new XboxController(0);
   
   @Override
   public void autonomousInit() {
-    intakeMotor.set(ControlMode.PercentOutput, 0.7);
+    shooterMotor1.set(ControlMode.PercentOutput, 0.95);
+    shooterMotor2.set(ControlMode.PercentOutput, 0.95);
   }
 
   @Override
